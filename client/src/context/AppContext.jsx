@@ -15,6 +15,9 @@ export const AppContextProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
+  const [companyName, setCompanyName] = useState("");
+const [companyDescription, setCompanyDescription] = useState("");
+
 
   // check seller status
   const fetchSeller = async () => {
@@ -60,6 +63,11 @@ export const AppContextProvider = ({ children }) => {
   };
   // add product to cart
   const addToCart = (itemId) => {
+    if(user===null){
+      toast.error("Please login to add items to cart");
+      setShowUserLogin(true);
+      return;
+    }
     let cartData = structuredClone(cartItems || {}); // safeguard for undefined
 
     if (cartData[itemId]) {
@@ -155,6 +163,11 @@ export const AppContextProvider = ({ children }) => {
     axios,
     fetchProducts,
     setCartItems,
+
+     companyName,
+  setCompanyName,
+  companyDescription,
+  setCompanyDescription,
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

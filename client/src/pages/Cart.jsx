@@ -14,14 +14,15 @@ const Cart = () => {
     setCartItems,
     removeFromCart,
     user,
-  } = useAppContext(); // Removed 'updateCartItem' as it's no longer needed here
+    companyName,
+    setCompanyName,
+    companyDescription,
+    setCompanyDescription,
+  } = useAppContext();
 
-  // state to store the products available in cart
   const [cartArray, setCartArray] = useState([]);
-  // state for address
   const [address, setAddress] = useState([]);
   const [showAddress, setShowAddress] = useState(false);
-  // state for selected address
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentOption, setPaymentOption] = useState("COD");
 
@@ -70,7 +71,7 @@ const Cart = () => {
       if (!selectedAddress) {
         return toast.error("Please select an address");
       }
-      // place order with cod
+
       if (paymentOption === "COD") {
         const { data } = await axios.post("/api/order/cod", {
           items: cartArray.map((item) => ({
@@ -78,7 +79,10 @@ const Cart = () => {
             quantity: item.quantity,
           })),
           address: selectedAddress._id,
+          companyName,
+          companyDescription,
         });
+
         if (data.success) {
           toast.success(data.message);
           setCartItems({});
@@ -87,13 +91,11 @@ const Cart = () => {
           toast.error(data.message);
         }
       }
-      // Add logic for Online Payment here if needed
     } catch (error) {
       toast.error(error.message);
     }
   };
 
-  // Enhanced Empty Cart View
   if (!cartArray.length) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
@@ -118,7 +120,7 @@ const Cart = () => {
     <div className="bg-gray-50 min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Cart Items Section */}
+          {/* Cart Items */}
           <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-md">
             <div className="flex justify-between items-baseline mb-6 border-b pb-4">
               <h1 className="text-3xl font-bold text-gray-800">
@@ -150,7 +152,6 @@ const Cart = () => {
                     <p className="text-sm text-gray-500">
                       Weight: {product.weight || "N/A"}
                     </p>
-                    {/* MODIFICATION: Display quantity as text instead of a select dropdown */}
                     <div className="flex items-center justify-center sm:justify-start gap-2 mt-2">
                       <p className="text-sm text-gray-600">
                         <span className="font-medium">Qty:</span>{" "}
@@ -173,6 +174,7 @@ const Cart = () => {
                 </div>
               ))}
             </div>
+
             <button
               onClick={() => navigate("/products")}
               className="group cursor-pointer flex items-center mt-8 gap-2 text-[#a45f53] font-medium hover:text-[#c77e71] transition-colors"
@@ -182,11 +184,32 @@ const Cart = () => {
             </button>
           </div>
 
-          {/* Order Summary Section */}
+          {/* Order Summary */}
           <div className="bg-white p-6 rounded-xl shadow-md h-fit">
             <h2 className="text-2xl font-bold text-gray-800 border-b pb-4 mb-4">
               Order Summary
             </h2>
+
+            {/* Company Info Form */}
+            <div className="mb-6">
+              <h3 className="text-md font-semibold text-gray-700 uppercase mb-2">
+                Company Information
+              </h3>
+              <input
+                type="text"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                placeholder="Your Company Name"
+                className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a45f53]"
+              />
+              <textarea
+                rows="4"
+                value={companyDescription}
+                onChange={(e) => setCompanyDescription(e.target.value)}
+                placeholder="Description about your company..."
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a45f53]"
+              ></textarea>
+            </div>
 
             {/* Address Section */}
             <div className="mb-4">
@@ -230,7 +253,7 @@ const Cart = () => {
               </div>
             </div>
 
-            {/* Payment Method Section */}
+            {/* Payment */}
             <div className="mb-4">
               <h3 className="text-md font-semibold text-gray-700 uppercase mb-2">
                 Payment Method
@@ -246,7 +269,6 @@ const Cart = () => {
 
             <hr className="my-4" />
 
-            {/* Price Details */}
             <div className="space-y-2 text-gray-600">
               <p className="flex justify-between">
                 <span>Subtotal</span>{" "}

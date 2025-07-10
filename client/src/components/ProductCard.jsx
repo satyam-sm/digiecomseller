@@ -78,7 +78,7 @@ const ProductCard = ({ product }) => {
               <button
                 onClick={() => addToCart(product._id)}
                 className="flex h-10 items-center justify-center gap-2 rounded-lg bg-[#a45f53] px-4 text-sm font-medium text-white transition-colors hover:bg-[#c77e71]"
-                aria-label="Add to cart"
+                aria-label="<%=Add to cart%>"
               >
                 <img
                   src={assets.add_cart}

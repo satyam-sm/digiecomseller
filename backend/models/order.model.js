@@ -8,6 +8,8 @@ const orderSchema = new mongoose.Schema(
         quantity: { type: Number, required: true },
       },
     ],
+    companyName: { type: String, required: true},
+    companyDescription: { type: String, required: true },
     amount: { type: Number, required: true },
     address: { type: String, required: true, ref: "Address" },
     status: { type: String, default: "Order Placed" },
