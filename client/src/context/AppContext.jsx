@@ -17,6 +17,8 @@ export const AppContextProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [companyName, setCompanyName] = useState("");
 const [companyDescription, setCompanyDescription] = useState("");
+const [contactNumber, setContactNumber] = useState("");
+const [timeLine, setTimeLine]= useState("");
 
 
   // check seller status
@@ -168,6 +170,10 @@ const [companyDescription, setCompanyDescription] = useState("");
   setCompanyName,
   companyDescription,
   setCompanyDescription,
+  contactNumber,
+  setContactNumber,
+  timeLine,
+  setTimeLine
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

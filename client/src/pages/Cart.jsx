@@ -18,6 +18,10 @@ const Cart = () => {
     setCompanyName,
     companyDescription,
     setCompanyDescription,
+    contactNumber,
+    setContactNumber,
+    timeLine,
+    setTimeLine
   } = useAppContext();
 
   const [cartArray, setCartArray] = useState([]);
@@ -71,7 +75,9 @@ const Cart = () => {
       if (!selectedAddress) {
         return toast.error("Please select an address");
       }
-
+      if (!companyName || !companyDescription || !contactNumber || !timeLine) {
+        return toast.error("Please fill all company information fields");
+      }
       if (paymentOption === "COD") {
         const { data } = await axios.post("/api/order/cod", {
           items: cartArray.map((item) => ({
@@ -81,6 +87,8 @@ const Cart = () => {
           address: selectedAddress._id,
           companyName,
           companyDescription,
+          contactNumber,
+          timeLine,
         });
 
         if (data.success) {
@@ -90,6 +98,8 @@ const Cart = () => {
         } else {
           toast.error(data.message);
         }
+      } else if (paymentOption === "Online") {
+        toast.error("Online payment is not implemented yet.");
       }
     } catch (error) {
       toast.error(error.message);
@@ -190,28 +200,43 @@ const Cart = () => {
               Order Summary
             </h2>
 
-            {/* Company Info Form */}
-            <div className="mb-6">
-              <h3 className="text-md font-semibold text-gray-700 uppercase mb-2">
-                Company Information
-              </h3>
-              <input
-                type="text"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-                placeholder="Your Company Name"
-                className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a45f53]"
-              />
-              <textarea
-                rows="4"
-                value={companyDescription}
-                onChange={(e) => setCompanyDescription(e.target.value)}
-                placeholder="Description about your company..."
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a45f53]"
-              ></textarea>
-            </div>
+                  <div className="mb-6">
+                    <h3 className="text-md font-semibold text-gray-700 uppercase mb-2">
+                    Company Information
+                    </h3>
+                    <input
+                    type="text"
+                    value={companyName}
+                    onChange={(e) => setCompanyName(e.target.value)}
+                    placeholder="Your Company Name"
+                    className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a45f53]"
+                    />
+                    <textarea
+                    rows="4"
+                    value={companyDescription}
+                    onChange={(e) => setCompanyDescription(e.target.value)}
+                    placeholder="Description about your company..."
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a45f53]"
+                    ></textarea>
+                    <input
+                    type="number"
+                    value={contactNumber}
+                    onChange={(e) => setContactNumber(e.target.value)}
+                    placeholder="Contact Number"
+                    className="w-full p-2 mt-4 border border-gray-300 rounded-lg"
+                    />
+                    <label className="block text-sm font-medium text-gray-700 mt-4 mb-1">
+                    Time line for this project
+                    </label>
+                    <input
+                    type="date"
+                    value={timeLine}
+                    onChange={(e) => setTimeLine(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded-lg"
+                    />
+                  </div>
 
-            {/* Address Section */}
+                  {/* Address Section */}
             <div className="mb-4">
               <h3 className="text-md font-semibold text-gray-700 uppercase mb-2">
                 Delivery Address

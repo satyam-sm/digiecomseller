@@ -31,7 +31,7 @@ const Orders = () => {
       {orders.map((order, index) => (
         <div
           key={index}
-          className="flex flex-col md:grid md:grid-cols-[2fr_1fr_1fr_1fr] md:items-center gap-5 p-5 max-w-4xl rounded-md border border-gray-300 text-gray-800"
+          className="flex flex-col md:grid md:grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr_1fr] md:items-center gap-5 p-5 max-w-6xl rounded-md border border-gray-300 text-gray-800"
         >
           <div className="flex gap-5">
             <img
@@ -40,8 +40,8 @@ const Orders = () => {
               alt="boxIcon"
             />
             <>
-              {order.items.map((item, index) => (
-                <div key={index} className="flex flex-col justify-center">
+              {order.items.map((item, idx) => (
+                <div key={idx} className="flex flex-col justify-center">
                   <p className="font-medium">
                     {item.product.name}{" "}
                     <span
@@ -55,6 +55,31 @@ const Orders = () => {
                 </div>
               ))}
             </>
+          </div>
+
+           <div className="flex flex-col text-sm">
+            <p>
+              <span className="font-medium">Company Name:</span>{" "}
+              {order.companyName || "-"}
+            </p>
+            <p>
+              <span className="font-medium">Description:</span>{" "}
+              {order.companyDescription || "-"}
+            </p>
+          </div>
+
+          <div className="flex flex-col text-sm">
+            <p>
+              <span className="font-medium">Contact Number:</span>{" "}
+              {order.contactNumber || "-"}
+            </p>
+          </div>
+
+          <div className="flex flex-col text-sm">
+            <p>
+              <span className="font-medium">Timeline:</span>{" "}
+              {order.timeLine || "-"}
+            </p>
           </div>
 
           <div className="text-sm">
@@ -77,6 +102,8 @@ const Orders = () => {
             <p>Date: {order.orderDate}</p>
             <p>Payment: {order.isPaid ? "Paid" : "Pending"}</p>
           </div>
+
+         
         </div>
       ))}
     </div>

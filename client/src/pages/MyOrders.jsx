@@ -66,6 +66,20 @@ const MyOrders = () => {
                 </p>
               </>
             )}
+
+            {/* ✅ Contact Number */}
+            {order.contactNumber && (
+              <p className="text-gray-800 font-semibold">
+                <span className="mr-2">Contact Number:</span> {order.contactNumber}
+              </p>
+            )}
+
+            {/* ✅ Timeline */}
+            {order.timeLine && (
+              <p className="text-gray-800 font-semibold">
+                <span className="mr-2">Timeline:</span> {order.timeLine}
+              </p>
+            )}
           </div>
 
           {order.items.map((item, idx) => (

@@ -24,6 +24,8 @@ export const placeOrderCOD = async (req, res) => {
       items,
       companyName,
       companyDescription,
+      contactNumber,
+      timeLine,
       address,
       amount,
       paymentType: "COD",

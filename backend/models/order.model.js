@@ -10,6 +10,8 @@ const orderSchema = new mongoose.Schema(
     ],
     companyName: { type: String, required: true},
     companyDescription: { type: String, required: true },
+    contactNumber: { type: Number, required: true },
+    timeLine: { type: Date, required: true },
     amount: { type: Number, required: true },
     address: { type: String, required: true, ref: "Address" },
     status: { type: String, default: "Order Placed" },
