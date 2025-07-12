@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from "../context/appContext";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { FaArrowLeft, FaTrashAlt } from "react-icons/fa";
@@ -21,7 +21,7 @@ const Cart = () => {
     contactNumber,
     setContactNumber,
     timeLine,
-    setTimeLine
+    setTimeLine,
   } = useAppContext();
 
   const [cartArray, setCartArray] = useState([]);
@@ -72,9 +72,9 @@ const Cart = () => {
 
   const placeOrder = async () => {
     try {
-      if (!selectedAddress) {
-        return toast.error("Please select an address");
-      }
+      // if (!selectedAddress) {
+      //   return toast.error("Please select an address");
+      // }
       if (!companyName || !companyDescription || !contactNumber || !timeLine) {
         return toast.error("Please fill all company information fields");
       }
@@ -84,7 +84,7 @@ const Cart = () => {
             product: item._id,
             quantity: item.quantity,
           })),
-          address: selectedAddress._id,
+          address: null,
           companyName,
           companyDescription,
           contactNumber,
@@ -170,9 +170,9 @@ const Cart = () => {
                     </div>
                   </div>
                   <div className="flex flex-col items-center gap-4">
-                    <p className="text-lg font-bold text-gray-800">
+                    {/* <p className="text-lg font-bold text-gray-800">
                       ${(product.offerPrice * product.quantity).toFixed(2)}
-                    </p>
+                    </p> */}
                     <button
                       onClick={() => removeFromCart(product._id)}
                       className="text-red-500 hover:text-red-700 transition-colors"
@@ -200,44 +200,44 @@ const Cart = () => {
               Order Summary
             </h2>
 
-                  <div className="mb-6">
-                    <h3 className="text-md font-semibold text-gray-700 uppercase mb-2">
-                    Company Information
-                    </h3>
-                    <input
-                    type="text"
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                    placeholder="Your Company Name"
-                    className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a45f53]"
-                    />
-                    <textarea
-                    rows="4"
-                    value={companyDescription}
-                    onChange={(e) => setCompanyDescription(e.target.value)}
-                    placeholder="Description about your company..."
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a45f53]"
-                    ></textarea>
-                    <input
-                    type="number"
-                    value={contactNumber}
-                    onChange={(e) => setContactNumber(e.target.value)}
-                    placeholder="Contact Number"
-                    className="w-full p-2 mt-4 border border-gray-300 rounded-lg"
-                    />
-                    <label className="block text-sm font-medium text-gray-700 mt-4 mb-1">
-                    Time line for this project
-                    </label>
-                    <input
-                    type="date"
-                    value={timeLine}
-                    onChange={(e) => setTimeLine(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-lg"
-                    />
-                  </div>
+            <div className="mb-6">
+              <h3 className="text-md font-semibold text-gray-700 uppercase mb-2">
+                Company Information
+              </h3>
+              <input
+                type="text"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                placeholder="Your Company Name"
+                className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a45f53]"
+              />
+              <textarea
+                rows="4"
+                value={companyDescription}
+                onChange={(e) => setCompanyDescription(e.target.value)}
+                placeholder="Description about your company..."
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a45f53]"
+              ></textarea>
+              <input
+                type="number"
+                value={contactNumber}
+                onChange={(e) => setContactNumber(e.target.value)}
+                placeholder="Contact Number"
+                className="w-full p-2 mt-4 border border-gray-300 rounded-lg"
+              />
+              <label className="block text-sm font-medium text-gray-700 mt-4 mb-1">
+                Time line for this project
+              </label>
+              <input
+                type="date"
+                value={timeLine}
+                onChange={(e) => setTimeLine(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-lg"
+              />
+            </div>
 
-                  {/* Address Section */}
-            <div className="mb-4">
+            {/* Address Section */}
+            {/* <div className="mb-4">
               <h3 className="text-md font-semibold text-gray-700 uppercase mb-2">
                 Delivery Address
               </h3>
@@ -276,10 +276,10 @@ const Cart = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
 
             {/* Payment */}
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <h3 className="text-md font-semibold text-gray-700 uppercase mb-2">
                 Payment Method
               </h3>
@@ -290,9 +290,9 @@ const Cart = () => {
                 <option value="COD">Cash On Delivery</option>
                 <option value="Online">Online Payment</option>
               </select>
-            </div>
+            </div> */}
 
-            <hr className="my-4" />
+            {/* <hr className="my-4" />
 
             <div className="space-y-2 text-gray-600">
               <p className="flex justify-between">
@@ -316,11 +316,11 @@ const Cart = () => {
                 <span>Total</span>{" "}
                 <span>${(totalCartAmount() * 1.02).toFixed(2)}</span>
               </p>
-            </div>
+            </div> */}
 
             <button
               onClick={placeOrder}
-              className="w-full mt-6 py-3 bg-[#a45f53] text-white font-bold rounded-lg hover:bg-[#c77e71] transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-[#a45f53]/50"
+              className="w-full mt-3 py-3 bg-[#a45f53] text-white font-bold rounded-lg hover:bg-[#c77e71] transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-[#a45f53]/50"
             >
               {paymentOption === "COD" ? "Place Order" : "Proceed to Checkout"}
             </button>

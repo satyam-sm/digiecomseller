@@ -1,19 +1,19 @@
 import React, { useContext, useEffect } from "react";
 import { assets } from "../assets/assets";
-import { AppContext } from "../context/AppContext";
+import { AppContext } from "../context/appContext";
 import toast from "react-hot-toast";
 
 const Address = () => {
   const [address, setAddress] = React.useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    street: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    country: "",
-    phone: "",
+    firstName: ".",
+    lastName: ".",
+    email: ".",
+    street: ".",
+    city: ".",
+    state: ".",
+    zipCode: ".",
+    country: ".",
+    phone: ".",
   });
   const { axios, user, navigate } = useContext(AppContext);
   const handleChange = (e) => {

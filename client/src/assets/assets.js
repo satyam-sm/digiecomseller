@@ -26,7 +26,7 @@ import main_banner_bg_sm from "./main_banner_bg_sm.png";
 import bottom_banner_image from "./bottom_banner_image.png";
 import bottom_banner_image_sm from "./bottom_banner_image_sm.png";
 import add_address_iamge from "./add_address_image.svg";
-import organic_vegitable_image from "./organic_vegitable_image.png";
+import webdev_c from "./webdevc.png";
 import fresh_fruits_image from "./fresh_fruits_image.png";
 import bottles_image from "./bottles_image.png";
 import maggi_image from "./maggi_image.png";
@@ -100,48 +100,49 @@ export const assets = {
   add_address_iamge,
   box_icon,
   add_cart,
+  webdev_c,
 };
 
 export const categories = [
   {
-    text: "Organic veggies",
-    path: "Vegetables",
-    image: organic_vegitable_image,
+    text: "Website Development Services",
+    path: "Website Development",
+    image: webdev_c,
     bgColor: "#FEF6DA",
   },
   {
-    text: "Fresh Fruits",
-    path: "Fruits",
+    text: "Digital Marketing Services",
+    path: "Digital Marketing",
     image: fresh_fruits_image,
     bgColor: "#FEE0E0",
   },
   {
-    text: "Cold Drinks",
-    path: "Drinks",
+    text: "Amazon Global Selling",
+    path: "Amazon Global",
     image: bottles_image,
     bgColor: "#F0F5DE",
   },
   {
-    text: "Instant Food",
-    path: "Instant",
+    text: "Account Launch & Setup",
+    path: "Launch & Setup",
     image: maggi_image,
     bgColor: "#E1F5EC",
   },
   {
-    text: "Dairy Products",
-    path: "Dairy",
-    image: dairy_product_image,
-    bgColor: "#FEE6CD",
-  },
-  {
-    text: "Bakery & Breads",
-    path: "Bakery",
+    text: "Listing & Cataloging",
+    path: "Listing",
     image: bakery_image,
     bgColor: "#E0F6FE",
   },
   {
-    text: "Grains & Cereals",
-    path: "Grains",
+    text: "Account Reinstatement",
+    path: "Account Reinstatement",
+    image: grain_image,
+    bgColor: "#F1E3F9",
+  },
+  {
+    text: "Imaging & Photography Services",
+    path: "Imaging & Photography",
     image: grain_image,
     bgColor: "#F1E3F9",
   },

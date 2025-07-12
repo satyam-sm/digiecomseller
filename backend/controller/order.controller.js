@@ -6,7 +6,7 @@ export const placeOrderCOD = async (req, res) => {
   try {
     const userId = req.user;
     const { items, address } = req.body;
-    if (!address || !items || items.length === 0) {
+    if (!items || items.length === 0) {
       return res
         .status(400)
         .json({ message: "Invalid order details", success: false });

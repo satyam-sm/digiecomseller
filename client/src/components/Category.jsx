@@ -9,19 +9,19 @@ const Category = () => {
         {categories.map((category, index) => (
           <div
             key={index}
-            className={`group cursor-pointer py-5 px-3 rounded-lg gap-2 flex flex-col items-center justify-center`}
+            className={`group cursor-pointer py-5 px-3 rounded-lg gap-2 flex flex-col items-center h-full justify-center `}
             style={{ backgroundColor: category.bgColor }}
             onClick={() => {
               navigate(`/products/${category.path.toLowerCase()}`);
               scrollTo(0, 0);
             }}
           >
-            <img
+            {/* <img
               src={category.image}
               alt=""
               className="max-w-28 transition group-hover:scale-110"
-            />
-            <p className="text-sm font-medium">{category.text}</p>
+            /> */}
+            <p className="text-sm font-medium text-center">{category.text}</p>
           </div>
         ))}
       </div>

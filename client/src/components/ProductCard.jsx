@@ -1,5 +1,5 @@
 import { assets } from "../assets/assets";
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from "../context/appContext";
 
 const ProductCard = ({ product }) => {
   const { addToCart, removeFromCart, cartItems, navigate } = useAppContext();
@@ -47,30 +47,30 @@ const ProductCard = ({ product }) => {
         </h3>
 
         {/* Ratings */}
-        <div className="mt-2 flex items-center">
-          {Array(5)
-            .fill(0)
-            .map((_, i) => (
-              <img
-                key={i}
-                src={i < 4 ? assets.star_icon : assets.star_dull_icon} // Assuming 4-star rating
-                alt="rating star"
-                className="h-4 w-4"
-              />
-            ))}
-          <span className="ml-2 text-sm text-gray-500">(120)</span>
-        </div>
 
         {/* Price and Cart Controls */}
-        <div className="mt-4 flex items-center justify-between">
-          <div className="flex items-baseline gap-2">
+        <div className="mt-0 flex items-center justify-between">
+          <div className="mt-2 flex items-center">
+            {Array(5)
+              .fill(0)
+              .map((_, i) => (
+                <img
+                  key={i}
+                  src={i < 4 ? assets.star_icon : assets.star_dull_icon} // Assuming 4-star rating
+                  alt="rating star"
+                  className="h-4 w-4"
+                />
+              ))}
+            <span className="ml-2 text-sm text-gray-500">(120)</span>
+          </div>
+          {/* <div className="flex items-baseline gap-2">
             <p className="text-xl font-bold text-[#c77e71]">
               ${product.offerPrice}
             </p>
             <p className="text-sm text-gray-400 line-through">
               ${product.price}
             </p>
-          </div>
+          </div> */}
 
           <div onClick={handleCartInteraction}>
             {!cartItems?.[product._id] ? (
@@ -89,24 +89,15 @@ const ProductCard = ({ product }) => {
               </button>
             ) : (
               // Quantity Selector for items in cart
-              <div className="flex h-10 items-center justify-center gap-2 rounded-lg bg-gray-100 select-none">
-                <button
-                  onClick={() => removeFromCart(product._id)}
-                  className="cursor-pointer px-3 py-1 text-lg text-[#c77e71] transition-colors hover:bg-gray-200 rounded-l-lg"
-                  aria-label="Remove one item"
-                >
-                  -
-                </button>
-                <span className="w-5 text-center font-medium text-gray-800">
-                  {cartItems[product._id]}
-                </span>
-                <button
-                  onClick={() => addToCart(product._id)}
-                  className="cursor-pointer px-3 py-1 text-lg text-[#c77e71] transition-colors hover:bg-gray-200 rounded-r-lg"
-                  aria-label="Add one more item"
-                >
-                  +
-                </button>
+              <div
+                className="flex h-10 items-center justify-center gap-2 rounded-lg bg-gray-100 select-none px-4"
+                onClick={() => {
+                  return (
+                    cartItems?.[product._id] && removeFromCart(product._id)
+                  );
+                }}
+              >
+                Remove
               </div>
             )}
           </div>
