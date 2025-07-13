@@ -98,17 +98,7 @@ const [timeLine, setTimeLine]= useState("");
     }
     return totalCount;
   };
-  // total cart amount
-  const totalCartAmount = () => {
-    let totalAmount = 0;
-    for (const items in cartItems) {
-      let itemInfo = products.find((product) => product._id === items);
-      if (cartItems[items] > 0) {
-        totalAmount += cartItems[items] * itemInfo.offerPrice;
-      }
-    }
-    return Math.floor(totalAmount * 100) / 100;
-  };
+
   // remove product from cart
   const removeFromCart = (itemId) => {
     let cartData = structuredClone(cartItems);
@@ -161,7 +151,6 @@ const [timeLine, setTimeLine]= useState("");
     searchQuery,
     setSearchQuery,
     cartCount,
-    totalCartAmount,
     axios,
     fetchProducts,
     setCartItems,

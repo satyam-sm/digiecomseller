@@ -1,5 +1,5 @@
 import { categories } from "../assets/assets";
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../context/AppContext";
 const Category = () => {
   const { navigate } = useAppContext();
   return (

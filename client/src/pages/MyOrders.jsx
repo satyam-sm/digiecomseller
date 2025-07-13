@@ -51,9 +51,6 @@ const MyOrders = () => {
             <p className="text-gray-800 font-semibold">
               <span className="mr-2">Payment:</span> {order.paymentType}
             </p>
-            <p className="text-gray-800 font-semibold">
-              <span className="mr-2">Total Amount:</span> ${order.amount}
-            </p>
 
             {/* ✅ Company Name and Description */}
             {order.companyName && (
@@ -77,7 +74,7 @@ const MyOrders = () => {
             {/* ✅ Timeline */}
             {order.timeLine && (
               <p className="text-gray-800 font-semibold">
-                <span className="mr-2">Timeline:</span> {order.timeLine}
+                <span className="mr-2">Timeline:</span> {new Date(order.timeLine).toLocaleDateString()}
               </p>
             )}
           </div>
@@ -108,10 +105,6 @@ const MyOrders = () => {
                 <p>Status: {order.status}</p>
                 <p>Date: {new Date(order.createdAt).toLocaleString()}</p>
               </div>
-
-              <p className="text-lg font-semibold text-center md:text-left">
-                Amount: ${item.product.offerPrice * item.quantity}
-              </p>
             </div>
           ))}
         </div>

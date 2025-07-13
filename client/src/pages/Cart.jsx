@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../context/AppContext";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { FaArrowLeft, FaTrashAlt } from "react-icons/fa";
@@ -9,7 +9,6 @@ const Cart = () => {
     products,
     navigate,
     cartCount,
-    totalCartAmount,
     cartItems,
     setCartItems,
     removeFromCart,
@@ -25,10 +24,6 @@ const Cart = () => {
   } = useAppContext();
 
   const [cartArray, setCartArray] = useState([]);
-  const [address, setAddress] = useState([]);
-  const [showAddress, setShowAddress] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState(null);
-  const [paymentOption, setPaymentOption] = useState("COD");
 
   const getCart = () => {
     let tempArray = [];
@@ -42,28 +37,6 @@ const Cart = () => {
     setCartArray(tempArray);
   };
 
-  const getAddress = async () => {
-    try {
-      const { data } = await axios.get("/api/address/get");
-      if (data.success) {
-        setAddress(data.addresses);
-        if (data.addresses.length > 0) {
-          setSelectedAddress(data.addresses[0]);
-        }
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  useEffect(() => {
-    if (user) {
-      getAddress();
-    }
-  }, [user]);
-
   useEffect(() => {
     if (products.length > 0 && cartItems) {
       getCart();
@@ -72,37 +45,49 @@ const Cart = () => {
 
   const placeOrder = async () => {
     try {
-      // if (!selectedAddress) {
-      //   return toast.error("Please select an address");
-      // }
+      console.log("Placing order with data:", {
+        items: cartArray.map((item) => ({
+          product: item._id,
+          quantity: item.quantity,
+        })),
+        companyName,
+        companyDescription,
+        contactNumber,
+        timeLine,
+      });
+
       if (!companyName || !companyDescription || !contactNumber || !timeLine) {
         return toast.error("Please fill all company information fields");
       }
-      if (paymentOption === "COD") {
-        const { data } = await axios.post("/api/order/cod", {
-          items: cartArray.map((item) => ({
-            product: item._id,
-            quantity: item.quantity,
-          })),
-          address: null,
-          companyName,
-          companyDescription,
-          contactNumber,
-          timeLine,
-        });
 
-        if (data.success) {
-          toast.success(data.message);
-          setCartItems({});
-          navigate("/my-orders");
-        } else {
-          toast.error(data.message);
-        }
-      } else if (paymentOption === "Online") {
-        toast.error("Online payment is not implemented yet.");
+      if (cartArray.length === 0) {
+        return toast.error("Cart is empty");
+      }
+
+      const { data } = await axios.post("/api/order/cod", {
+        items: cartArray.map((item) => ({
+          product: item._id,
+          quantity: item.quantity,
+        })),
+        companyName,
+        companyDescription,
+        contactNumber,
+        timeLine,
+      });
+
+      console.log("Order response:", data);
+
+      if (data.success) {
+        toast.success(data.message);
+        setCartItems({});
+        navigate("/my-orders");
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      console.error("Place order error:", error);
+      console.error("Error response:", error.response?.data);
+      toast.error(error.response?.data?.message || error.message || "Failed to place order");
     }
   };
 
@@ -170,9 +155,6 @@ const Cart = () => {
                     </div>
                   </div>
                   <div className="flex flex-col items-center gap-4">
-                    {/* <p className="text-lg font-bold text-gray-800">
-                      ${(product.offerPrice * product.quantity).toFixed(2)}
-                    </p> */}
                     <button
                       onClick={() => removeFromCart(product._id)}
                       className="text-red-500 hover:text-red-700 transition-colors"
@@ -236,93 +218,11 @@ const Cart = () => {
               />
             </div>
 
-            {/* Address Section */}
-            {/* <div className="mb-4">
-              <h3 className="text-md font-semibold text-gray-700 uppercase mb-2">
-                Delivery Address
-              </h3>
-              <div className="relative p-3 bg-gray-100 rounded-lg">
-                <p className="text-gray-600 text-sm pr-16">
-                  {selectedAddress
-                    ? `${selectedAddress.street}, ${selectedAddress.city}, ${selectedAddress.state}`
-                    : "No address selected"}
-                </p>
-                <button
-                  onClick={() => setShowAddress(!showAddress)}
-                  className="absolute top-3 right-3 text-sm text-[#a45f53] font-semibold hover:underline"
-                >
-                  Change
-                </button>
-                {showAddress && (
-                  <div className="absolute z-10 top-full mt-2 w-full bg-white border rounded-lg shadow-lg py-1">
-                    {address.map((addr) => (
-                      <p
-                        key={addr._id}
-                        onClick={() => {
-                          setSelectedAddress(addr);
-                          setShowAddress(false);
-                        }}
-                        className="text-gray-600 text-sm p-2 cursor-pointer hover:bg-gray-100"
-                      >
-                        {addr.street}, {addr.city}, {addr.state}
-                      </p>
-                    ))}
-                    <p
-                      onClick={() => navigate("/add-address")}
-                      className="text-[#a45f53] text-center cursor-pointer p-2 hover:bg-[#a45f53]/10"
-                    >
-                      Add address
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div> */}
-
-            {/* Payment */}
-            {/* <div className="mb-4">
-              <h3 className="text-md font-semibold text-gray-700 uppercase mb-2">
-                Payment Method
-              </h3>
-              <select
-                onChange={(e) => setPaymentOption(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-[#a45f53]"
-              >
-                <option value="COD">Cash On Delivery</option>
-                <option value="Online">Online Payment</option>
-              </select>
-            </div> */}
-
-            {/* <hr className="my-4" />
-
-            <div className="space-y-2 text-gray-600">
-              <p className="flex justify-between">
-                <span>Subtotal</span>{" "}
-                <span className="font-medium">
-                  ${totalCartAmount().toFixed(2)}
-                </span>
-              </p>
-              <p className="flex justify-between">
-                <span>Shipping Fee</span>{" "}
-                <span className="font-medium text-green-600">Free</span>
-              </p>
-              <p className="flex justify-between">
-                <span>Tax (2%)</span>{" "}
-                <span className="font-medium">
-                  ${(totalCartAmount() * 0.02).toFixed(2)}
-                </span>
-              </p>
-              <hr className="my-2" />
-              <p className="flex justify-between text-lg font-bold text-gray-800">
-                <span>Total</span>{" "}
-                <span>${(totalCartAmount() * 1.02).toFixed(2)}</span>
-              </p>
-            </div> */}
-
             <button
               onClick={placeOrder}
               className="w-full mt-3 py-3 bg-[#a45f53] text-white font-bold rounded-lg hover:bg-[#c77e71] transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-[#a45f53]/50"
             >
-              {paymentOption === "COD" ? "Place Order" : "Proceed to Checkout"}
+              Place Order
             </button>
           </div>
         </div>

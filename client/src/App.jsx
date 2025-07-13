@@ -9,7 +9,6 @@ import Footer from "./components/Footer";
 import { useAppContext } from "./context/AppContext";
 import Auth from "./modals/Auth";
 import ProductCategory from "./pages/ProductCategory";
-import Address from "./pages/Address";
 import MyOrders from "./pages/MyOrders";
 import SellerLogin from "./components/seller/SellerLogin";
 import SellerLayout from "./pages/seller/SellerLayout";
@@ -33,7 +32,6 @@ const App = () => {
           <Route path="/products/:category" element={<ProductCategory />} />
           <Route path="/product/:category/:id" element={<SingleProduct />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/add-address" element={<Address />} />
           <Route path="/my-orders" element={<MyOrders />} />
           <Route
             path="/seller"
